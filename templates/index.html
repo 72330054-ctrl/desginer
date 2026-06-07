@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --accent-blue: #7E3285;
+            --accent-teal: #9A4FA3;
+            --light-bg: #F8EEF9;
+            --text-dark: #4A1650;
+            --border-medium: #C79AD0;
+            --shadow-soft: 0 8px 24px rgba(126, 50, 133, 0.12);
+            --transition-smooth: 0.3s ease;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #0f0b14;
+            color: #f0e8f5;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .academic-header {
+            padding: 4rem 1.5rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .academic-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 90% at 50% -10%, rgba(126,50,133,0.35) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .header-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-teal);
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            opacity: 0.85;
+        }
+
+        .header-eyebrow::before,
+        .header-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: var(--accent-teal);
+            opacity: 0.4;
+        }
+
+        .academic-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 400;
+            color: #f0e8f5;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+        }
+
+        .academic-title i {
+            color: var(--accent-teal);
+            font-size: 0.85em;
+            margin-right: 8px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: #7a6885;
+            max-width: 440px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── MAIN CARD ── */
+        .container { max-width: 700px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+        .calculator-card {
+            background: #150e1c;
+            border: 1px solid #2e1f3a;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+            padding: 1.5rem 1.75rem;
+        }
+
+        .card-header h2 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            margin: 0;
+            letter-spacing: 0.02em;
+        }
+
+        .card-body { padding: 2rem 1.75rem; }
+
+        /* ── QUESTION BLOCKS ── */
+        .mb-4 {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'DM Serif Display', serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #d4c8e0;
+            margin-bottom: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.9rem 1.1rem;
+            background: #0f0b14;
+            border: 1px solid #2e1f3a;
+            border-radius: 12px;
+            color: #c8b8d8;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%237a6885' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            cursor: pointer;
+            transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(126, 50, 133, 0.2);
+            color: #f0e8f5;
+        }
+
+        .form-select option { background: #1a1025; color: #c8b8d8; }
+
+        /* ── SUBMIT BUTTON ── */
+        .text-center { text-align: center; }
+        .mt-4 { margin-top: 1.5rem; }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.9rem 2.25rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        /* ── RESULTS ── */
+        .container.mt-5 {
+            margin-top: 2.5rem;
+        }
+
+        .text-center.mb-4 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 400;
+            color: #f0e8f5;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .card {
+            background: #150e1c;
+            border: 1px solid #2e1f3a;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .card.mb-3 { margin-bottom: 1rem; }
+        .shadow-sm { box-shadow: 0 4px 20px rgba(126,50,133,0.1); }
+
+        .card .card-body {
+            padding: 1.5rem 1.75rem;
+        }
+
+        .card .card-body h4 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: #d4c8e0;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress {
+            height: 6px;
+            background: #2e1f3a;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-teal));
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .card-body { padding: 1.25rem; }
+            .academic-header { padding: 3rem 1rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+   {% if not top_skills %}
+    <header class="academic-header">
+        <div class="container">
+            <div class="header-eyebrow">Soft Skills Assessment</div>
+            <h1 class="academic-title">
+                <i class="bi bi-stars"></i>Soft Skills Prediction
+            </h1>
+            <p class="header-subtitle">
+                Answer the questions below to predict your strongest soft skill.
+            </p>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="calculator-card" id="risk-section">
+                <div class="card-header">
+                    <h2><i class="bi bi-ui-checks me-2"></i>Enter Your Answers</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+
+                        <!-- Question 1 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                1. You are designing a campaign about loneliness. What inspires your concept most?
+                            </label>
+                            <select name="Q1" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Pinterest trends and visual references</option>
+                                <option value="B">Personal emotional experiences</option>
+                                <option value="C">Street observation and conversations</option>
+                                <option value="D">Successful existing campaigns</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                2. A client rejects your idea 1 day before delivery. What do you do first?
+                            </label>
+                            <select name="Q2" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Defend your idea strongly</option>
+                                <option value="B">Ask why and analyze feedback</option>
+                                <option value="C">Restart the design immediately</option>
+                                <option value="D">Feel discouraged and doubt your work</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                3. When starting a new project, you usually:
+                            </label>
+                            <select name="Q3" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Search similar designs online</option>
+                                <option value="B">Observe real life and human behavior</option>
+                                <option value="C">Wait for full instructions before thinking</option>
+                                <option value="D">Follow structured steps only</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                4. Your design looks visually strong but the message is unclear. You:
+                            </label>
+                            <select name="Q4" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Add more effects and visuals</option>
+                                <option value="B">Simplify hierarchy and structure</option>
+                                <option value="C">Change colors and styling</option>
+                                <option value="D">Ignore feedback and trust aesthetics</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                5. Your layout feels unbalanced. You:
+                            </label>
+                            <select name="Q5" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Adjust based on intuition</option>
+                                <option value="B">Apply grid system and structure rules</option>
+                                <option value="C">Experiment randomly until it works</option>
+                                <option value="D">Copy a reference layout</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 6 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                6. You are choosing typography for a modern emotional brand. You choose based on:
+                            </label>
+                            <select name="Q6" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Trendy fonts you see online</option>
+                                <option value="B">Meaning, readability, and emotional tone</option>
+                                <option value="C">Personal preference</option>
+                                <option value="D">Competitor styles</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 7 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                7. A brand has unclear messaging. You first:
+                            </label>
+                            <select name="Q7" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Add more visuals and content</option>
+                                <option value="B">Define one clear core message</option>
+                                <option value="C">Redesign the logo immediately</option>
+                                <option value="D">Focus on aesthetics only</option>
+                            </select>
+                        </div>
+
+                        <!-- Question 8 -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                8. For a creative app, long-term engagement is built through:
+                            </label>
+                            <select name="Q8" class="form-select" required>
+                                <option value="" selected disabled>Select an answer</option>
+                                <option value="A">Beautiful UI only</option>
+                                <option value="B">Emotional storytelling and habit loops</option>
+                                <option value="C">Random notifications and rewards</option>
+                                <option value="D">Complex features and tools</option>
+                            </select>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn-primary btn-lg px-5">
+                                <i class="bi bi-stars"></i> Predict My Soft Skill
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if top_skills %}
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">
+            Your Top Recommended Soft Skills
+        </h2>
+
+        {% for item in top_skills %}
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+
+                <h4>{{ loop.index }}. {{ item.skill }}</h4>
+
+                <div class="progress mt-2">
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: {{ item.confidence }}%">
+                    </div>
+                </div>
+                <div style="font-size:13px; color:#7a6885; margin-top:6px; font-weight:300;">{{ item.confidence }}% confidence</div>
+
+            </div>
+        </div>
+        {% endfor %}
+        
+
+    </div>
+    <div class="text-center mt-3">
+    <a href="/" class="btn-primary" style="text-decoration: none;">
+        <i class="bi bi-arrow-clockwise"></i>
+        Recalculate My Skills
+    </a>
+</div>
+
+    {% endif %}
+
+</body>
+</html>
+<!-- {% if top_skills %}
+    {% for item in top_skills %}
+        <h4>{{ item.skill }}</h4>
+        <p>{{ item.confidence }}%</p>
+    {% endfor %}
+{% endif %} -->
